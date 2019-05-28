@@ -11,7 +11,7 @@ def PROMETHEUS_SERVICE = 'prometheus'
 //Pipeline
 node {
             stage ('Deploy to Dev') {
-            parallel {
+            parallel (
             'Deploy Loki to Dev': {
                 dir ('loki_pipeline') {
                     checkout scm
@@ -72,4 +72,6 @@ node {
                     }
                 }
             }
-    }
+	)
+	}
+}
