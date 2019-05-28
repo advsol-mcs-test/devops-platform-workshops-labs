@@ -7,12 +7,12 @@ def PROD_NAMESPACE = "s4g19x-advsol-mcs-test-openshift201-may2019-prod"
 
 
 //Pipeline
+//Pipeline
 node {
             stage ('Build Stage'){
                 dir ('simple_pipeline') {
                     checkout scm
-                    sh "echo HELLO WORLD! "
-                    sh "ls -lha openshift201/templates"
+                    sh "oc get projects"
                 }
             }
     }
