@@ -89,7 +89,7 @@ objects:
         annotations:
           prometheus.io/port: http-metrics
           prometheus.io/scrape: "true"
-          
+          our-awesome-metadata: "nothing to see here"
       spec:
         serviceAccountName: default
         containers:
