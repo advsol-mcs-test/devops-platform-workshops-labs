@@ -48,7 +48,7 @@ node {
                     timeout (time: 180, unit: 'SECONDS'){
                         openshift.withCluster() {
                             openshift.withProject("${DEV_NAMESPACE}") {
-                                def dc = openshift.selector('deployment', "${GRAFANA_SERVICE}")
+                                def dc = openshift.selector('dc', "${GRAFANA_SERVICE}")
                                 // this will wait until the desired replicas are available
                                 dc.rollout().status()
                             }
