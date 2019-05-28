@@ -76,7 +76,7 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${GRAFANA_SERVICE_NAME}
           env: 
-            - name: GF_PATH_LOGS
+            - name: GF_PATHS_LOGS
               value: /logs
             - name: GF_LOG_MODE
               value: file
