@@ -15,11 +15,23 @@ node {
                     sh "echo Wait for service to be up"
                     timeout (time: 180, unit: 'SECONDS'){
                         openshift.withCluster() {
-                        openshift.withProject("${DEV_NAMESPACE}") {
-                            def dc = openshift.selector('deployment', "${LOKI_SERVICE}")
-                            // this will wait until the desired replicas are available
-                            dc.rollout().status()
+                            openshift.withProject("${DEV_NAMESPACE}") {
+                                def dc = openshift.selector('deployment', "${LOKI_SERVICE}")
+                                // this will wait until the desired replicas are available
+                                dc.rollout().status()
+                            }
                         }
+                    }
+                    input message: 'Want to deploy to prod?', ok: 'SHIP-IT!'
+                    sh "oc process -f openshift201/templates/loki.yaml -p  LOKI_SERVICE_NAME=${LOKI_SERVICE} | oc apply -f - -n ${PROD_NAMESPACE}"
+                    sh "echo Wait PROD for service to be up"
+                    timeout (time: 180, unit: 'SECONDS'){
+                        openshift.withCluster() {
+                            openshift.withProject("${PROD_NAMESPACE}") {
+                                def dc = openshift.selector('deployment', "${LOKI_SERVICE}")
+                                // this will wait until the desired replicas are available
+                                dc.rollout().status()
+                            }
                         }
                     }
                 }
